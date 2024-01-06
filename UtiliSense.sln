@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtiliSense.api", "UtiliSense.api\UtiliSense.api.csproj", "{2039E3ED-7522-49D0-96AD-EAE26C3117E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2039E3ED-7522-49D0-96AD-EAE26C3117E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2039E3ED-7522-49D0-96AD-EAE26C3117E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2039E3ED-7522-49D0-96AD-EAE26C3117E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2039E3ED-7522-49D0-96AD-EAE26C3117E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CB552CB2-DD53-4321-8FD0-7028A5FD97AC}
+	EndGlobalSection
+EndGlobal
