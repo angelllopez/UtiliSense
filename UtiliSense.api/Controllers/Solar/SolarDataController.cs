@@ -13,6 +13,8 @@ namespace UtiliSense.api.Controllers.Solar
             _service = service;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSolarDataAsync()
         {
             var data = await _service.GetAllSolarDataAsync();
