@@ -1,4 +1,8 @@
-﻿namespace UtiliSense.test.UtiliSense.api.test.Controllers.Solar
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
+using UtiliSense.data.Models;
+
+namespace UtiliSense.test.UtiliSense.api.test.Controllers.Solar
 {
     public class SolarDataControllerTests
     {
@@ -6,7 +10,7 @@
         public async Task GetSolarDataAsync_ReturnsOk_WhenRecordsExist()
         {
             // Arrange
-            //var stubList = new List<SolarData> { new SolarData() };
+            var stubList = new List<SolarData> { new SolarData() };
             //var mockService = new Mock<SolarDataService>(MockBehavior.Strict);
 
             //mockService.Setup(s => s.GetAllSolarDataAsync()).ReturnsAsync(stubList);
