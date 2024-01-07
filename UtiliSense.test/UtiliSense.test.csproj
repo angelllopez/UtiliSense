@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\UtiliSense.api\UtiliSense.api.csproj" />
     <ProjectReference Include="..\UtiliSense.data\UtiliSense.data.csproj" />
+    <ProjectReference Include="..\UtiliSense.service\UtiliSense.service.csproj" />
   </ItemGroup>
 
 </Project>

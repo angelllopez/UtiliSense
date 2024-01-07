@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{7E06FA95-F
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtiliSense.data", "UtiliSense.data\UtiliSense.data.csproj", "{E553BB47-833A-4E26-9420-21868E1F3792}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{D58230B4-F457-428E-AFC8-4833309FEB64}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UtiliSense.service", "UtiliSense.service\UtiliSense.service.csproj", "{B029A00F-A110-4034-AE2A-4ADB8CAF9A23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +35,10 @@ Global
 		{E553BB47-833A-4E26-9420-21868E1F3792}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E553BB47-833A-4E26-9420-21868E1F3792}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E553BB47-833A-4E26-9420-21868E1F3792}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B029A00F-A110-4034-AE2A-4ADB8CAF9A23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B029A00F-A110-4034-AE2A-4ADB8CAF9A23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B029A00F-A110-4034-AE2A-4ADB8CAF9A23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B029A00F-A110-4034-AE2A-4ADB8CAF9A23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -38,6 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{CB3E5899-AB8D-40E6-B3FA-7374DAEC9D67} = {6A21EF8D-46AF-4B79-902C-FC231A734C21}
 		{E553BB47-833A-4E26-9420-21868E1F3792} = {7E06FA95-F1AC-4C16-A0BF-BD23D87F15DC}
+		{B029A00F-A110-4034-AE2A-4ADB8CAF9A23} = {D58230B4-F457-428E-AFC8-4833309FEB64}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB552CB2-DD53-4321-8FD0-7028A5FD97AC}
