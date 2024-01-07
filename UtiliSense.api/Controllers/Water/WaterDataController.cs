@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using UtiliSense.service.Contracts;
 
 namespace UtiliSense.api.Controllers.Water
@@ -14,6 +13,8 @@ namespace UtiliSense.api.Controllers.Water
             _service = service;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetWaterDataAsync()
         {
             var data = await _service.GetAllWaterDataAsync();

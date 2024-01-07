@@ -14,6 +14,7 @@ namespace UtiliSense.api.Controllers.Gas
         }
 
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetGasDataAsync()
         {
             var data = await _service.GetAllGasDataAsync();
