@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
+using UtiliSense.api.Controllers.Solar;
 using UtiliSense.data.Models;
+using UtiliSense.service.Contracts;
 
 namespace UtiliSense.test.UtiliSense.api.test.Controllers.Solar
 {
@@ -11,18 +13,18 @@ namespace UtiliSense.test.UtiliSense.api.test.Controllers.Solar
         {
             // Arrange
             var stubList = new List<SolarData> { new SolarData() };
-            //var mockService = new Mock<SolarDataService>(MockBehavior.Strict);
+            var mockService = new Mock<ISolarDataService>(MockBehavior.Strict);
 
-            //mockService.Setup(s => s.GetAllSolarDataAsync()).ReturnsAsync(stubList);
+            mockService.Setup(s => s.GetAllSolarDataAsync()).ReturnsAsync(stubList);
 
-            //var controller = new SolarDataController(mockService.Object);
+            var controller = new SolarDataController(mockService.Object);
 
             // Act
-            //var result = await controller.GetSolarDataAsync();
+            var result = await controller.GetSolarDataAsync();
 
             // Assert
-            //Assert.NotEmpty(result);
-            //Assert.IsType<OkObjectResult>(result);
+            Assert.NotNull(result);
+            Assert.IsType<OkObjectResult>(result);
         }
     }
 }
