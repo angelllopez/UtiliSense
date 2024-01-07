@@ -3,6 +3,8 @@ using UtiliSense.service.Contracts;
 
 namespace UtiliSense.api.Controllers.Solar
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class SolarDataController : ControllerBase
     {
         private readonly ISolarDataService _service;
