@@ -22,7 +22,21 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-    - name: Build
+
+    - name: Install OWASP Dependency-Check
+      run: dotnet tool install --global dotnet-retire
+    
+    - name: Build with dotnet
       run: dotnet build --no-restore
+
+    - name: Check vulnerabilities with OWASP Dependency-Check
+      run: dotnet retire --loglevel=info --output-path=dependency-check-report.json
+
+    - name: Upload report
+      uses: actions/upload-artifact@v2
+      with:
+        name: dependency-check-report
+        path: dependency-check-report.json
+    
     - name: Test
       run: dotnet test --no-build --verbosity normal
