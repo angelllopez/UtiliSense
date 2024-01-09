@@ -1,9 +1,13 @@
 # This is a CD workflow that runs manually
-name: Publish to Staging 
+name: Publish and Deploy UtiliSense to Staging 
 
 # Trigger the workflow manually using workflow_dispatch
 
 on: workflow_dispatch
+
+env:
+  AZURE_WEBAPP_NAME: UtiliSense
+
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -32,8 +36,14 @@ jobs:
       - name: Build
         run: dotnet build --configuration Release --no-restore
 
-      # Publish the app to Azure App Service usign the publish profile
+      # Publish the app to Azure App Service using the publish profile
       - name: Publish
-        run: dotnet publish --configuration Release --no-build
+        run: dotnet publish --configuration Release --output ./publish --no-build
 
-        
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ED032E3F84BE485BA2BDD9891735EAE6 }}
+          package: ${{ github.workspace }}/UtiliSense/bin/Release/net5.0/publish
+
