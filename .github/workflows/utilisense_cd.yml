@@ -1,5 +1,5 @@
 # This is a CD workflow that runs manually
-name: CD
+name: Publish to Staging 
 
 # Trigger the workflow manually using workflow_dispatch
 
@@ -8,24 +8,32 @@ on: workflow_dispatch
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This is the job that deploys the code
-  deploy:
+  publish:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
+    # The environment that the job references
+    environment: staging
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+    
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to deploy your project.
-          echo For example, you can use actions like
-          echo - [aws-actions/configure-aws-credentials] to configure AWS credentials
-          echo - [aws-actions/amazon-ecr-login] to log in to Amazon ECR
-          echo - [aws-actions/amazon-ecs-deploy-task-definition] to deploy a task definition to Amazon ECS
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      # Publish the app to Azure App Service usign the publish profile
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build
+
+        
