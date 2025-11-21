@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using UtiliSense.api.Controllers.Gas;
-using UtiliSense.data.Models;
+using UtiliSense.api.Core.shared;
 using UtiliSense.service.Contracts;
+using UtiliSense.shared.DTOs;
 
 namespace UtiliSense.test.UtiliSense.api.test.Controllers.Gas
 {
@@ -12,15 +13,18 @@ namespace UtiliSense.test.UtiliSense.api.test.Controllers.Gas
         public async Task GetGasDataAsync_ReturnsOk_WhenRecordsExist()
         {
             // Arrange
-            var stubList = new List<GasData> { new GasData() };
+            var stubList = new List<GasMeterReadingDto> { new() };
+            var stubLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger<GasDataController>.Instance;
+
             var mockService = new Mock<IGasDataService>(MockBehavior.Strict);
 
-            mockService.Setup(s => s.GetAllGasDataAsync()).ReturnsAsync(stubList);
+            mockService.Setup(s => s.GetAllGasDataAsync())
+                .ReturnsAsync(Result<IEnumerable<GasMeterReadingDto>>.Success(stubList));
 
-            var controller = new GasDataController(mockService.Object);
+            var controller = new GasDataController(mockService.Object, stubLogger);
 
             // Act
-            var result = await controller.GetGasDataAsync();
+            var result = await controller.GetAllGasDataAsync();
 
             // Assert
             Assert.NotNull(result);
@@ -28,3 +32,5 @@ namespace UtiliSense.test.UtiliSense.api.test.Controllers.Gas
         }
     }
 }
+
+

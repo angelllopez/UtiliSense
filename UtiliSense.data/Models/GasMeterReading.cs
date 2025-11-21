@@ -1,10 +1,10 @@
 ﻿namespace UtiliSense.data.Models
 {
-    public class GasData
+    public class GasMeterReading
     {
         public int Id { get; set; }
         public DateTime MeterReadDate { get; set; }
-        public decimal Comsumption { get; set; }
-        public decimal Cost { get; set; }
+        public double Consumption { get; set; }
+        public double AvgTemperature { get; set; }
     }
 }
