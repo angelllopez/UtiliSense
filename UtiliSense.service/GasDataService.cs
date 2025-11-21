@@ -13,10 +13,10 @@ namespace UtiliSense.service
 {
     public class GasDataService(UtiliSenseDbContext db, ILogger<GasDataService> logger, IMapper mapper, IValidator<GasMeterReadingDto> validator) : IGasDataService
     {
-        private readonly UtiliSenseDbContext _db = db;
-        private readonly IValidator<GasMeterReadingDto> _validator = validator;
-        private readonly ILogger<GasDataService> _logger = logger;
-        private readonly IMapper _mapper = mapper;
+        private readonly UtiliSenseDbContext _db = db ?? throw new ArgumentNullException(nameof(db));
+        private readonly IValidator<GasMeterReadingDto> _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+        private readonly ILogger<GasDataService> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        private readonly IMapper _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
         public async Task<Result<GasMeterReadingDto>> CreateGasDataRecordAsync(GasMeterReadingDto gasMeterReadingDto)
         {
@@ -73,7 +73,7 @@ namespace UtiliSense.service
                 }
 
                 // Check for existing record with the same BillingMonth
-                var existingRecord = await _db.GasData.FirstOrDefaultAsync(g => g.MeterReadDate == gasMeterReadingDto.MeterReadDate);
+                var existingRecord = await _db.GasMeterReadings.FirstOrDefaultAsync(g => g.MeterReadDate == gasMeterReadingDto.MeterReadDate);
                 if (existingRecord != null)
                 {
                     var result = Result<GasMeterReadingDto>.Failure(
@@ -87,7 +87,7 @@ namespace UtiliSense.service
                 }
                 #endregion
                 var entity = _mapper.Map<GasMeterReading>(gasMeterReadingDto);
-                await _db.GasData.AddAsync(entity);
+                await _db.GasMeterReadings.AddAsync(entity);
                 await _db.SaveChangesAsync();
 
                 var resultDto = _mapper.Map<GasMeterReadingDto>(entity);
@@ -117,7 +117,7 @@ namespace UtiliSense.service
             try
             {
                 _logger.LogInformation("GetAllGasDataAsync: Retrieving all gas data records.");
-                var dataRecords = await _db.GasData.ToListAsync();
+                var dataRecords = await _db.GasMeterReadings.ToListAsync();
                 if (!dataRecords.Any())
                 {
                     var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(
@@ -152,7 +152,7 @@ namespace UtiliSense.service
                 //}
 
                 _logger.LogInformation("GetGasDataByDayAsync: Retrieves gas consumption data for a specific day.");
-                var gasDataRecord = await _db.GasData.FirstOrDefaultAsync(g => g.MeterReadDate.Date == date.Date);
+                var gasDataRecord = await _db.GasMeterReadings.FirstOrDefaultAsync(g => g.MeterReadDate.Date == date.Date);
                 if (gasDataRecord == null)
                 {
                     var result = Result<GasMeterReadingDto>.Failure(ErrorCode.NotFound, $"No gas data found for {date.Date}.");
@@ -175,7 +175,7 @@ namespace UtiliSense.service
             try
             {
                 _logger.LogInformation("GetGasDataByMonthAsync: Retrieves gas data from the specified month.");
-                var gasDataRecords = await _db.GasData.Where(g => g.MeterReadDate.Month == date.Month && g.MeterReadDate.Year == date.Year).ToListAsync();
+                var gasDataRecords = await _db.GasMeterReadings.Where(g => g.MeterReadDate.Month == date.Month && g.MeterReadDate.Year == date.Year).ToListAsync();
                 if (!gasDataRecords.Any())
                 {
                     var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.NotFound, $"No gas data found for {date:MMMM yyyy}.");
@@ -213,7 +213,7 @@ namespace UtiliSense.service
                 //    return result;
                 //}
 
-                var gasDataRecords = await _db.GasData
+                var gasDataRecords = await _db.GasMeterReadings
                     .Where(g => g.MeterReadDate.Year == date.Year)
                     .ToListAsync();
 
@@ -274,7 +274,7 @@ namespace UtiliSense.service
                     return result;
                 }
 
-                var existingRecord = await _db.GasData.FirstOrDefaultAsync(g => g.MeterReadDate == gasDataDto.MeterReadDate);
+                var existingRecord = await _db.GasMeterReadings.FirstOrDefaultAsync(g => g.MeterReadDate == gasDataDto.MeterReadDate);
                 if (existingRecord == null)
                 {
                     var result = Result<bool>.Failure(
@@ -320,7 +320,7 @@ namespace UtiliSense.service
                 return result;
             }
 
-            var existingRecord = await _db.GasData.FirstOrDefaultAsync(g => g.MeterReadDate == date);
+            var existingRecord = await _db.GasMeterReadings.FirstOrDefaultAsync(g => g.MeterReadDate == date);
             if (existingRecord == null)
             {
                 var result = Result<bool>.Failure(
@@ -333,14 +333,10 @@ namespace UtiliSense.service
                 return result;
             }
 
-            _db.GasData.Remove(existingRecord);
+            _db.GasMeterReadings.Remove(existingRecord);
             await _db.SaveChangesAsync();
             return Result<bool>.Success(true);
         }
-
-
-        private bool IsDateOutOfRange(DateTime date) =>
-            date > DateTime.Now || date < new DateTime(2000, 1, 1);
 
         private void LogValidationFailure(string method, string errorMessage)
         {

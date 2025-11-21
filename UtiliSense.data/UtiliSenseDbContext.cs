@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using UtiliSense.data.Models;
 
 namespace UtiliSense.data
@@ -13,7 +11,7 @@ namespace UtiliSense.data
         }
 
         // DbSet for your domain models
-        public DbSet<GasMeterReading> GasData { get; set; } = null!;
+        public DbSet<GasMeterReading> GasMeterReadings { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
