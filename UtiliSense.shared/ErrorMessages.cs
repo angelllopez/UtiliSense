@@ -38,5 +38,11 @@ namespace UtiliSense.shared
 
         public static string ArgumentNullException(string paramName) =>
             $"Argument '{paramName}' cannot be null.";
+
+        public static string InternalServerError() =>
+            "A problem happened while handling your request.";
+
+        public static string ConflictError() =>
+            "A record for the specified date already exists.";
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using UtiliSense.api.Core.shared;
 using UtiliSense.service.Contracts;
+using UtiliSense.shared;
 using UtiliSense.shared.DTOs;
 
 namespace UtiliSense.api.Controllers.Gas;
@@ -49,8 +50,7 @@ public class GasDataController : ControllerBase
         var result = await _service.GetAllGasDataAsync();
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while retrieving all gas data: {ErrorMessage}", result.ErrorMessage);
-            return StatusCode(StatusCodes.Status500InternalServerError, "An error occurred while retrieving gas data.");
+            return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError());
         }
 
         return Ok(result.Data);
@@ -82,12 +82,11 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while retrieving gas data for the specified day: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
@@ -120,12 +119,11 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while retrieving gas data for the specified month: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
@@ -158,12 +156,11 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while retrieving gas data for the specified year: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
@@ -196,12 +193,11 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while creating the gas data record: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
-                ErrorCode.Conflict => Conflict("A record for the specified date already exists."),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                ErrorCode.Conflict => Conflict(ErrorMessages.ConflictError()),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
@@ -233,12 +229,11 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while updating the gas data record: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
@@ -270,11 +265,10 @@ public class GasDataController : ControllerBase
 
         if (!result.IsSuccess)
         {
-            _logger.LogError("An error occurred while deleting the gas data record: {ErrorMessage}", result.ErrorMessage);
             return result.ErrorCode switch
             {
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, "A problem happened while handling your request.")
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
             };
         }
 
