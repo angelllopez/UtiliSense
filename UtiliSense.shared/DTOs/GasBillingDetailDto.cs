@@ -1,5 +1,11 @@
 ﻿namespace UtiliSense.shared.DTOs;
 
+/// <summary>
+/// Represents the details of a gas billing period, including consumption and cost information.
+/// </summary>
+/// <remarks>This data transfer object (DTO) is used to encapsulate information about a specific gas billing
+/// period. It includes the start and end dates of the billing period, the total gas consumption, and the total
+/// cost.</remarks>
 public class GasBillingDetailDto
 {
     public int Id { get; set; }

@@ -27,7 +27,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<GasMeterReadingDto>.Failure(
                         ErrorCode.NullOrEmpty,
-                        ErrorMessages.NullOrEmptyParameter(nameof(gasMeterReadingDto)));
+                        InternalErrorMessages.NullOrEmptyParameter(nameof(gasMeterReadingDto)));
                     LogValidationFailure(nameof(CreateGasDataRecordAsync), result.ErrorMessage ?? "Unknown validation error");
                     return result;
                 }
@@ -37,7 +37,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<GasMeterReadingDto>.Failure(
                         ErrorCode.ValidationError,
-                        ErrorMessages.ValidationFailed(nameof(GasMeterReadingDto), validationResult.Errors));
+                        InternalErrorMessages.ValidationFailed(nameof(GasMeterReadingDto), validationResult.Errors));
                     LogValidationFailure(nameof(CreateGasDataRecordAsync), result.ErrorMessage ?? "Unknow validation error");
                     return result;
                 }
@@ -47,7 +47,7 @@ namespace UtiliSense.service
                 //{
                 //    var result = Result<GasMeterReadingDto>.Failure(
                 //        ErrorCode.ValidationError,
-                //        ErrorMessages.NullOrEmptyParameter(nameof(gasMeterReadingDto.MeterReadDate)));
+                //        InternalErrorMessages.NullOrEmptyParameter(nameof(gasMeterReadingDto.MeterReadDate)));
                 //    LogValidationFailure(nameof(CreateGasDataRecordAsync), result.ErrorMessage);
                 //    return result;
                 //}
@@ -57,7 +57,7 @@ namespace UtiliSense.service
                 //{
                 //    var result = Result<GasMeterReadingDto>.Failure(
                 //        ErrorCode.ValidationError,
-                //        ErrorMessages.InvalidValue("Consumption or Cost", "Negative value"));
+                //        InternalErrorMessages.InvalidValue("Consumption or Cost", "Negative value"));
                 //    LogValidationFailure(nameof(CreateGasDataRecordAsync), result.ErrorMessage);
                 //    return result;
                 //}
@@ -67,7 +67,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<GasMeterReadingDto>.Failure(
                         ErrorCode.OutOfRange,
-                        ErrorMessages.InvalidValue(nameof(gasMeterReadingDto.MeterReadDate), gasMeterReadingDto.MeterReadDate));
+                        InternalErrorMessages.InvalidValue(nameof(gasMeterReadingDto.MeterReadDate), gasMeterReadingDto.MeterReadDate));
                     LogValidationFailure(nameof(CreateGasDataRecordAsync), result.ErrorMessage ?? "Unknown validation error");
                     return result;
                 }
@@ -78,7 +78,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<GasMeterReadingDto>.Failure(
                         ErrorCode.Conflict,
-                        ErrorMessages.RecordConflict(
+                        InternalErrorMessages.RecordConflict(
                             nameof(GasMeterReading),
                             gasMeterReadingDto.MeterReadDate.ToString() 
                         ));
@@ -97,11 +97,11 @@ namespace UtiliSense.service
             {
                 string errorMessage = ex switch
                 {
-                    AutoMapperMappingException amEx => ErrorMessages.AutomapperMappingException(
+                    AutoMapperMappingException amEx => InternalErrorMessages.AutomapperMappingException(
                         nameof(GasMeterReadingDto),
                         nameof(GasMeterReading),
                         amEx.Message),
-                    ArgumentNullException argNullEx => ErrorMessages.ArgumentNullException(
+                    ArgumentNullException argNullEx => InternalErrorMessages.ArgumentNullException(
                         argNullEx.Message
                         ?? "unknown"),
                     _ => $"An unexpected error occurred: {ex.Message}"
@@ -122,7 +122,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(
                         ErrorCode.NotFound,
-                        ErrorMessages.RecordNotFound(nameof(GasMeterReading), "all")
+                        InternalErrorMessages.RecordNotFound(nameof(GasMeterReading), "all")
                     );
                     _logger.LogError("GetAllGasDataAsync: {Result}", result.ErrorMessage);
                     return result;
@@ -146,7 +146,7 @@ namespace UtiliSense.service
                 // Validate the input date
                 //if (IsDateOutOfRange(date))
                 //{
-                //    var result = Result<GasMeterReadingDto>.Failure(ErrorCode.OutOfRange, ErrorMessages.OutOfRangeValue(nameof(date), date));
+                //    var result = Result<GasMeterReadingDto>.Failure(ErrorCode.OutOfRange, InternalErrorMessages.OutOfRangeValue(nameof(date), date));
                 //    _logger.LogError("GetGasDataByDayAsync: {Result}", result.ErrorMessage);
                 //    return result;
                 //}
@@ -202,14 +202,14 @@ namespace UtiliSense.service
 
                 if (date == default)
                 {
-                    var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.NullOrEmpty, ErrorMessages.NullOrEmptyParameter(nameof(date)));
+                    var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.NullOrEmpty, InternalErrorMessages.NullOrEmptyParameter(nameof(date)));
                     _logger.LogError("GetGasDataByYearAsync: {Result}", result.ErrorMessage);
                     return result;
                 }
 
                 //if (IsDateOutOfRange(date))
                 //{
-                //    var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.OutOfRange, ErrorMessages.OutOfRangeValue(nameof(date), date));
+                //    var result = Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.OutOfRange, InternalErrorMessages.OutOfRangeValue(nameof(date), date));
                 //    return result;
                 //}
 
@@ -242,7 +242,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<bool>.Failure(
                         ErrorCode.NullOrEmpty,
-                        ErrorMessages.NullOrEmptyParameter(nameof(gasDataDto)));
+                        InternalErrorMessages.NullOrEmptyParameter(nameof(gasDataDto)));
                     _logger.LogError("UpdateGasDataRecordAsync: {Result}", result.ErrorMessage);
                     return result;
                 }
@@ -251,7 +251,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<bool>.Failure(
                         ErrorCode.ValidationError,
-                        ErrorMessages.NullOrEmptyParameter(nameof(gasDataDto.MeterReadDate)));
+                        InternalErrorMessages.NullOrEmptyParameter(nameof(gasDataDto.MeterReadDate)));
                     _logger.LogError("UpdateGasDataRecordAsync: {Result}", result.ErrorMessage);
                     return result;
                 }
@@ -260,7 +260,7 @@ namespace UtiliSense.service
                 //{
                 //    var result = Result<bool>.Failure(
                 //        ErrorCode.ValidationError,
-                //        ErrorMessages.InvalidValue("Consumption or Cost", "Negative value"));
+                //        InternalErrorMessages.InvalidValue("Consumption or Cost", "Negative value"));
                 //    _logger.LogError("UpdateGasDataRecordAsync: {Result}", result.ErrorMessage);
                 //    return result;
                 //}
@@ -269,7 +269,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<bool>.Failure(
                         ErrorCode.OutOfRange,
-                        ErrorMessages.InvalidValue(nameof(gasDataDto.MeterReadDate), gasDataDto.MeterReadDate));
+                        InternalErrorMessages.InvalidValue(nameof(gasDataDto.MeterReadDate), gasDataDto.MeterReadDate));
                     _logger.LogError("UpdateGasDataRecordAsync: {Result}", result.ErrorMessage);
                     return result;
                 }
@@ -279,7 +279,7 @@ namespace UtiliSense.service
                 {
                     var result = Result<bool>.Failure(
                         ErrorCode.NotFound, 
-                        ErrorMessages.RecordNotFound(
+                        InternalErrorMessages.RecordNotFound(
                             nameof(GasMeterReading), 
                             gasDataDto.MeterReadDate.ToString()
                         ));
@@ -306,7 +306,7 @@ namespace UtiliSense.service
             {
                 var result = Result<bool>.Failure(
                     ErrorCode.NullOrEmpty,
-                    ErrorMessages.NullOrEmptyParameter(nameof(date)));
+                    InternalErrorMessages.NullOrEmptyParameter(nameof(date)));
                 _logger.LogError("DeleteGasDataRecordAsync: {Result}", result.ErrorMessage);
                 return result;
             }
@@ -315,7 +315,7 @@ namespace UtiliSense.service
             {
                 var result = Result<bool>.Failure(
                     ErrorCode.OutOfRange,
-                    ErrorMessages.InvalidValue(nameof(date), date));
+                    InternalErrorMessages.InvalidValue(nameof(date), date));
                 _logger.LogError("DeleteGasDataRecordAsync: {Result}", result.ErrorMessage);
                 return result;
             }
@@ -325,7 +325,7 @@ namespace UtiliSense.service
             {
                 var result = Result<bool>.Failure(
                     ErrorCode.NotFound,
-                    ErrorMessages.RecordNotFound(
+                    InternalErrorMessages.RecordNotFound(
                         nameof(GasMeterReading),
                         date.ToString()
                     ));

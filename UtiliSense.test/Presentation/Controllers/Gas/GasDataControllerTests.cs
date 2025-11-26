@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Moq;
 using UtiliSense.api.Controllers.Gas;
 using UtiliSense.api.Core.shared;
@@ -29,6 +30,25 @@ public class GasDataControllerTests
         // Assert
         Assert.NotNull(response);
         Assert.IsType<OkObjectResult>(response.Result);
+    }
+
+    [Fact]
+    public async Task GetGasDataAsync_ReturnsInternalServerError_WhenNoRecordsExist()
+    {
+        // Arrange
+        var stubLogger = Microsoft.Extensions.Logging.Abstractions.NullLogger<GasDataController>.Instance;
+        var mockService = new Mock<IGasDataService>(MockBehavior.Strict);
+        mockService.Setup(s => s.GetAllGasDataAsync())
+            .ReturnsAsync(Result<IEnumerable<GasMeterReadingDto>>.Failure(ErrorCode.Conflict, "No records found"));
+        var controller = new GasDataController(mockService.Object, stubLogger);
+
+        // Act
+        var response = await controller.GetAllGasDataAsync();
+
+        // Assert
+        Assert.NotNull(response);
+        var objectResult = Assert.IsType<ObjectResult>(response.Result);
+        Assert.Equal(StatusCodes.Status500InternalServerError, objectResult.StatusCode);
     }
 }
 

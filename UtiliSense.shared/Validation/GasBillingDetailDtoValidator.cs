@@ -3,6 +3,13 @@ using UtiliSense.shared.DTOs;
 
 namespace UtiliSense.shared.Validation;
 
+/// <summary>
+/// Provides validation rules for the GasBillingDetailDto to ensure that billing details such as dates, consumption, and
+/// cost meet required constraints.
+/// </summary>
+/// <remarks>This validator enforces that the start and end dates are specified and that the end date is not
+/// earlier than the start date. It also ensures that total consumption and total cost are non-negative values. Use this
+/// class to validate GasBillingDetailDto instances before processing or persisting billing data.</remarks>
 public class GasBillingDetailDtoValidator : AbstractValidator<GasBillingDetailDto>
 {
     public GasBillingDetailDtoValidator()

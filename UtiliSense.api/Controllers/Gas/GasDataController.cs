@@ -50,7 +50,7 @@ public class GasDataController : ControllerBase
         var result = await _service.GetAllGasDataAsync();
         if (!result.IsSuccess)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError());
+            return StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError);
         }
 
         return Ok(result.Data);
@@ -86,7 +86,7 @@ public class GasDataController : ControllerBase
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
@@ -123,7 +123,7 @@ public class GasDataController : ControllerBase
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
@@ -160,7 +160,7 @@ public class GasDataController : ControllerBase
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
@@ -196,8 +196,8 @@ public class GasDataController : ControllerBase
             return result.ErrorCode switch
             {
                 ErrorCode.OutOfRange => BadRequest(),
-                ErrorCode.Conflict => Conflict(ErrorMessages.ConflictError()),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                ErrorCode.Conflict => Conflict(ExternalErrorMessages.Conflict),
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
@@ -233,7 +233,7 @@ public class GasDataController : ControllerBase
             {
                 ErrorCode.OutOfRange => BadRequest(),
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
@@ -268,7 +268,7 @@ public class GasDataController : ControllerBase
             return result.ErrorCode switch
             {
                 ErrorCode.NotFound => NotFound(),
-                _ => StatusCode(StatusCodes.Status500InternalServerError, ErrorMessages.InternalServerError())
+                _ => StatusCode(StatusCodes.Status500InternalServerError, ExternalErrorMessages.ServerError)
             };
         }
 
