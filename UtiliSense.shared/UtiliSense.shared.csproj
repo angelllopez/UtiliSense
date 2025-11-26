@@ -8,12 +8,11 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="16.0.0-beta-1" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.10" />
+    <PackageReference Include="FluentValidation" Version="12.1.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\UtiliSense.data\UtiliSense.data.csproj" />
-    <ProjectReference Include="..\UtiliSense.shared\UtiliSense.shared.csproj" />
   </ItemGroup>
 
 </Project>

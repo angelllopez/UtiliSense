@@ -1,15 +1,16 @@
-﻿using UtiliSense.data.Models;
+﻿using UtiliSense.api.Core.shared;
+using UtiliSense.shared.DTOs;
 
 namespace UtiliSense.service.Contracts
 {
     public interface IGasDataService
     {
-        Task<IEnumerable<GasData>> GetAllGasDataAsync();
-        Task<GasData> GetGasDataByDay(DateTime date);
-        Task<IEnumerable<GasData>> GetGasDataByMonth(DateTime date);
-        Task<IEnumerable<GasData>> GetGasDataByYear(DateTime date);
-        Task<bool> CreateGasDataRecord(GasData gasData);
-        Task<bool> UpdateGasDataRecord(GasData gasData);
-        Task<bool> DeleteGasDataRecord(int id);
+        Task<Result<IEnumerable<GasMeterReadingDto>>> GetAllGasDataAsync();
+        Task<Result<GasMeterReadingDto>> GetGasDataByDayAsync(DateTime date);
+        Task<Result<IEnumerable<GasMeterReadingDto>>> GetGasDataByMonthAsync(DateTime date);
+        Task<Result<IEnumerable<GasMeterReadingDto>>> GetGasDataByYearAsync(DateTime date);
+        Task<Result<GasMeterReadingDto>> CreateGasDataRecordAsync(GasMeterReadingDto gasData);
+        Task<Result<bool>> UpdateGasDataRecordAsync(GasMeterReadingDto gasData);
+        Task<Result<bool>> DeleteGasDataRecordAsync(DateTime date);
     }
 }
